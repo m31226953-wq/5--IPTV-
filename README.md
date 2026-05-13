@@ -93,7 +93,7 @@
 - TiJi
 - Рыжий
 - Солнце
-- Nickelodeon CIS (Русский)
+- Nickelodeon
 - Nicktoons
 
 ### 🎬 Развлекательные (12)
