@@ -94,6 +94,7 @@
 - Рыжий
 - Солнце
 - Nickelodeon
+- Nick Jr.
 - Nicktoons
 
 ### 🎬 Развлекательные (12)
