@@ -1,8 +1,21 @@
 {
-  "rewrites": [
+  "version": 2,
+  "builds": [
     {
-      "source": "/(.*)",
-      "destination": "/api/playlist"
+      "src": "/src/index.js",
+      "use": "@vercel/node"
     }
-  ]
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/src/index.js",
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
+    }
+  ],
+  "env": {
+    "M3U8_URL": "https://raw.githubusercontent.com/m31226953-wq/5--IPTV-/refs/heads/main/5%D0%91%D0%98%D0%A2%D0%9E%D0%92.m3u8"
+  }
 }
