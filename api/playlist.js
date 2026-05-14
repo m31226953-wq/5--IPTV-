@@ -1,16 +1,22 @@
 const M3U8_URL = 'https://raw.githubusercontent.com/m31226953-wq/5--IPTV-/refs/heads/main/5%D0%91%D0%98%D0%A2%D0%9E%D0%92.m3u8';
 
-const BROWSERS = [
-  'Chrome', 'Firefox', 'Safari', 'Edg', 'Edge',
-  'Opera', 'Brave', 'YaBrowser', 'Mozilla'
+const ALLOWED_PLAYERS = [
+  'VLC', 'LibVLC',       // VLC
+  'SSIP',                // SS IPTV
+  'IPTVSmarters',        // IPTV Smarters
+  'TiviMate',            // TiviMate
+  'Kodi',                // Kodi
+  'Lavf',                // FFmpeg
+  'ExoPlayer',           // Android плееры
+  'AppleCoreMedia'       // iPhone/iPad
 ];
 
 export default async function handler(req, res) {
   const userAgent = req.headers['user-agent'] || '';
-
-  const isBrowser = BROWSERS.some(browser => userAgent.includes(browser));
   
-  if (isBrowser) {
+  const isAllowed = ALLOWED_PLAYERS.some(player => userAgent.includes(player));
+  
+  if (!isAllowed) {
     res.status(403).send(`
       <!DOCTYPE html>
       <html>
@@ -26,9 +32,12 @@ export default async function handler(req, res) {
     return;
   }
   
-  const response = await fetch(M3U8_URL);
-  const content = await response.text();
-  
-  res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
-  res.status(200).send(content);
+  try {
+    const response = await fetch(M3U8_URL);
+    const content = await response.text();
+    res.setHeader('Content-Type', 'application/vnd.apple.mpegurl');
+    res.status(200).send(content);
+  } catch (error) {
+    res.status(500).send('Ошибка загрузки плейлиста');
+  }
 }
